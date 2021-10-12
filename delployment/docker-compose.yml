@@ -10,7 +10,7 @@ services:
     command: [start-kafka.sh]
     ports:
       - "9092:9092"
-    hostname: kafka
+    hostname: Kafka
     environment:
       KAFKA_CREATE_TOPICS: "events:1:1" # topic:partition:replicas
       KAFKA_ADVERTISED_HOST_NAME: kafka-ti-acit3855.eastus2.cloudapp.azure.com # docker-machine ip
@@ -27,7 +27,7 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'train_events'
+      MYSQL_DATABASE: 'traintravelers'
       # So you don't have to use root, but you can if you like
       MYSQL_USER: 'train_user'
       # You can use whatever password you like
