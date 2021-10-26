@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  description: This API recieves train scheduling and booking info
+  version: "1.0.0"
+  title: Train Travelers API
+  contact:
+    email: tiyer@my.bcit.ca
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: schedule
+    description: API calls related to adding train schedules
+  - name: ticket
+    description: API calls related to ticket bookings on a train
+paths:
+  /route/stats:
+    get:
+      tags:
+        - schedule
+        - ticket
+      summary: returns a route stats from the system
+      operationId: app.get_stats
+      description: Returns a route stats from the system
+      responses:
+        '200':
+          description: Successfully returned a stats
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteStats'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message404'
+components:
+  schemas:
+    RouteStats:
+      type: object
+      required:
+        - count_routes
+        - count_tickets
+        - max_route_length
+        - max_tickets_bought
+      properties:
+        count_routes:
+          type: integer
+          example: 32
+        count_tickets:
+          type: integer
+          example: 20
+        max_route_length:
+          type: integer
+          example: 59
+        max_tickets_bought:
+          type: integer
+          example: 19
+        date_created:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+    Message404:
+      type: object
+      properties:
+        message:
+          type: string
