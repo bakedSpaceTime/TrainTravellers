@@ -1,0 +1,116 @@
+openapi: 3.0.0
+info:
+  description: This API recieves train scheduling and booking info
+  version: "1.0.0"
+  title: Train Travelers API
+  contact:
+    email: tiyer@my.bcit.ca
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: schedule
+    description: API calls related to adding train schedules
+  - name: ticket
+    description: API calls related to ticket bookings on a train
+paths:
+  /route/schedule:
+    post:
+      tags:
+        - schedule
+      summary: adds a train route to the system
+      operationId: app.add_train_route
+      description: Adds a new train route to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrainRoute'
+        description: Train Route item to add
+  /route/ticket:
+    post:
+      tags:
+        - ticket
+      summary: adds a ticket booking to the system
+      operationId: app.add_ticket_booking
+      description: Adds a ticket booking to system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TicketBooking'
+        description:  Ticket Booking item to add
+components:
+  schemas:
+    TrainRoute:
+      type: object
+      required:
+        - route_id
+        - train_line
+        - route_origin
+        - route_destination
+        - route_departure_time
+        - estimated_travel_time
+      properties:
+        route_id:
+          type: integer
+          example: 32
+        train_line:
+          type: string
+          example: CNRail
+        route_origin:
+          type: string
+          example: Rotterdam
+        route_destination:
+          type: string
+          example: Paris
+        route_departure_time:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        estimated_travel_time:
+          type: integer
+          example: 2
+    TicketBooking:
+      type: object
+      required:
+        - ticket_id
+        - cabin_class
+        - customer_name
+        - customer_email
+        - route_id
+      properties:
+        ticket_id:
+          type: integer
+          example: 32
+        cabin_class:
+          type: string
+          example: Economy
+        customer_name:
+          type: string
+          example: Taz Forster
+        customer_email:
+          type: string
+          example: 'tf@mail.me'
+        route_id:
+          type: integer
+          example: 33
+    Message404:
+      type: object
+      properties:
+        message:
+          type: string

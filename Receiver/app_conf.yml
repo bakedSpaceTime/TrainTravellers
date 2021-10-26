@@ -1,0 +1,9 @@
+version: 1
+route_schedule:
+  url: http://localhost:8090/route/schedule
+route_ticket:
+  url: http://localhost:8090/route/ticket
+events:
+ hostname: kafka-ti-acit3855.eastus2.cloudapp.azure.com
+ port: 9092
+ topic: events
