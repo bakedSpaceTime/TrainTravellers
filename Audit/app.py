@@ -36,7 +36,8 @@ def get_train_route_reading(index):
     logger.info(f"Retrieving train route at {index=}")
     try:
         event = get_message(consumer, index, "train_route")
-        return event, 200
+        if event:
+            return event, 200
 
     except:
         logger.error("No more messages found")
