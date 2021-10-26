@@ -1,0 +1,5 @@
+mysql-connector-python==8.0.26
+PyYAML==5.4.1
+connexion==2.9.0
+SQLAlchemy==1.4.25
+pykafka==2.8.0

@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  description: This API recieves train scheduling and booking info
+  version: "1.0.0"
+  title: Train Travelers API
+  contact:
+    email: tiyer@my.bcit.ca
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: schedule
+    description: API calls related to adding train schedules
+  - name: ticket
+    description: API calls related to ticket bookings on a train
+paths:
+  /route/schedule:
+    get:
+      tags:
+        - schedule
+      summary: returns a list of train routes from the system
+      operationId: app.get_train_route
+      description: Returns a list of scheduled train routes
+      parameters:
+        - name: timestamp
+          in: query
+          description: limits number of train routes returned by timestamp
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully returned a list of train schedule
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TrainRoute'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message404'
+  /route/ticket:
+    get:
+      tags:
+        - ticket
+      summary: returns a list of ticket bookings from the system
+      operationId: app.get_ticket_booking
+      description: Returns a list of ticket bookings
+      parameters:
+        - name: timestamp
+          in: query
+          description: limits number of ticket bookings returned by timestamp
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successfully returned a list of ticket bookings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TicketBooking'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message404'
+components:
+  schemas:
+    TrainRoute:
+      type: object
+      required:
+        - route_id
+        - train_line
+        - route_origin
+        - route_destination
+        - route_departure_time
+        - estimated_travel_time
+      properties:
+        route_id:
+          type: integer
+          example: 32
+        train_line:
+          type: string
+          example: CNRail
+        route_origin:
+          type: string
+          example: Rotterdam
+        route_destination:
+          type: string
+          example: Paris
+        route_departure_time:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        estimated_travel_time:
+          type: integer
+          example: 2
+    TicketBooking:
+      type: object
+      required:
+        - ticket_id
+        - cabin_class
+        - customer_name
+        - customer_email
+        - route_id
+      properties:
+        ticket_id:
+          type: integer
+          example: 32
+        cabin_class:
+          type: string
+          example: Economy
+        customer_name:
+          type: string
+          example: Taz Forster
+        customer_email:
+          type: string
+          example: 'tf@mail.me'
+        route_id:
+          type: integer
+          example: 33
+    Message404:
+      type: object
+      properties:
+        message:
+          type: string
