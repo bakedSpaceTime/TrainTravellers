@@ -33,7 +33,7 @@ def get_train_route_reading(index):
     # 100ms. There is a risk that this loop never stops if the
     # index is large and messages are constantly being received!
     consumer = topic.get_simple_consumer(reset_offset_on_start=True, consumer_timeout_ms=1000)
-    logger.info(f"Retrieving train route at {index=}")
+    logger.info(f"Retrieving train route at index:{index}")
     try:
         event = get_message(consumer, index, "train_route")
         if event:
@@ -55,11 +55,11 @@ def get_ticket_booking_reading(index):
     topic = client.topics[str.encode(app_config["events"]["topic"])]
 
     consumer = topic.get_simple_consumer(reset_offset_on_start=True, consumer_timeout_ms=1000)
-    logger.info(f"Retrieving ticket booking at {index=}")
+    logger.info(f"Retrieving ticket booking at index:{index}")
 
     try:
         event = get_message(consumer, index, "ticket_booking")
-        logger.debug(f"{event=}")
+        logger.debug(f"events: {event}")
         if event:
             return event, 200
 
