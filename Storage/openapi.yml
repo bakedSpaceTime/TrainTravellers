@@ -117,7 +117,7 @@ components:
           example: 32
         cabin_class:
           type: string
-          example: Economy
+          example: ECON
         customer_name:
           type: string
           example: Taz Forster
