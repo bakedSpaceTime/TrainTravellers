@@ -43,6 +43,36 @@ services:
     # Where our data will be persisted
     volumes:
       - my-db:/var/lib/mysql
+  receiver:
+    image: receiver:vt
+    ports:
+      - 8080:8080
+    hostname: receiver
+    networks:
+      - traintravellers
+  storage:
+    image: storage:vt
+    ports:
+      - 8090:8090
+    hostname: storage
+    networks:
+      - traintravellers
+  processing:
+    image: processing:vt
+    ports:
+      - 8100:8100
+    hostname: processing
+    networks:
+      - traintravellers
+  audit:
+    image: audit:vt
+    ports:
+      - 9010:9010
+    hostname: audit
+    networks:
+      - traintravellers
+networks:
+  traintravellers: {}
 # Names our volume
 volumes:
   my-db:
