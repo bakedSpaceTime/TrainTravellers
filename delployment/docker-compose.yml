@@ -44,6 +44,9 @@ services:
     volumes:
       - my-db:/var/lib/mysql
   receiver:
+    build:
+      context: ../Receiver
+      dockerfile: Dockerfile
     image: receiver:vt
     ports:
       - 8080:8080
@@ -53,6 +56,9 @@ services:
     depends_on:
       - "kafka"
   storage:
+    build:
+      context: ../Storage
+      dockerfile: Dockerfile
     image: storage:vt
     ports:
       - 8090:8090
@@ -63,6 +69,9 @@ services:
       - "kafka"
       - "db"
   processing:
+    build:
+      context: ../Processing
+      dockerfile: Dockerfile
     image: processing:vt
     ports:
       - 8100:8100
@@ -72,6 +81,9 @@ services:
     depends_on:
       - "storage"
   audit:
+    build:
+      context: ../Storage
+      dockerfile: Dockerfile
     image: audit:vt
     ports:
       - 9010:9010
