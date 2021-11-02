@@ -82,7 +82,7 @@ services:
       - "storage"
   audit:
     build:
-      context: ../Storage
+      context: ../Audit
       dockerfile: Dockerfile
     image: audit:vt
     ports:
