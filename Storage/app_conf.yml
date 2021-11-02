@@ -4,7 +4,7 @@ datastore:
   password: 'TrAiNtRaVeLlErs'
   hostname: 'kafka-ti-acit3855.eastus2.cloudapp.azure.com'
   port: 3306
-  db: traintravelers
+  db: traintravellers
 events:
  hostname: kafka-ti-acit3855.eastus2.cloudapp.azure.com
  port: 9092

@@ -27,7 +27,7 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'traintravelers'
+      MYSQL_DATABASE: 'traintravellers'
       # So you don't have to use root, but you can if you like
       MYSQL_USER: 'train_user'
       # You can use whatever password you like
