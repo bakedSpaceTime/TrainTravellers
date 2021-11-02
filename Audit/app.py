@@ -4,6 +4,7 @@ import yaml
 from pykafka import KafkaClient
 from pykafka.common import OffsetType
 import json
+from flask_cors import CORS, cross_origin
 
 # def init_app():
 #   global app_config, log_config, logger
@@ -89,6 +90,8 @@ def get_message(consumer, index, payload_type):
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
+app = connexion.FlaskApp(__name__, specification_dir='')
+CORS(app.app)app.app.config['CORS_HEADERS'] = 'Content-Type'
 
 if __name__ == "__main__":
     # init_app()
