@@ -92,6 +92,19 @@ services:
       - traintravellers
     depends_on:
       - "kafka"
+  dashboard:
+    build:
+      context: ../Dashboard-UI
+      dockerfile: Dockerfile
+    image: dashboard
+    ports:
+      - "3000:3000"
+    hostname: dashboard
+    networks:
+      - traintravellers
+    depends_on:
+      - "processing"
+      - "audit"
 networks:
   traintravellers: {}
 # Names our volume
