@@ -1,7 +1,7 @@
 import connexion
 from connexion import NoContent
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import sessionmaker
 from base import Base
 from train_route import TrainRoute
 from ticket_booking import TicketBooking
@@ -26,7 +26,7 @@ def add_train_route(body):
                     est_dept_tm_obj,
                     body['estimated_travel_time'], )
 
-    with Session(DB_ENGINE) as session:
+    with DB_SESSION() as session:
         session.add(tr)
         session.commit()
 
@@ -44,7 +44,7 @@ def add_ticket_booking(body):
                        body['customer_email'],
                        body['route_id'])
 
-    with Session(DB_ENGINE) as session:
+    with DB_SESSION() as session:
         session.add(tb)
         session.commit()
 
@@ -56,7 +56,7 @@ def add_ticket_booking(body):
 def get_ticket_booking(timestamp):
     timestamp_dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
-    with Session(DB_ENGINE) as session:
+    with DB_SESSION() as session:
         tickets = session.query(TicketBooking).filter(TicketBooking.date_created >= timestamp_dt)
 
     return [tkt.to_dict() for tkt in tickets], 200
@@ -65,7 +65,7 @@ def get_ticket_booking(timestamp):
 def get_train_route(timestamp):
     timestamp_dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
-    with Session(DB_ENGINE) as session:
+    with DB_SESSION() as session:
         routes = session.query(TrainRoute).filter(TrainRoute.date_created >= timestamp_dt)
 
     return [rt.to_dict() for rt in routes], 200
@@ -118,7 +118,8 @@ logger = logging.getLogger('basicLogger')
 db_string = (f'mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@'
              f'{app_config["datastore"]["hostname"]}:{app_config["datastore"]["port"]}/{app_config["datastore"]["db"]}')
 
-DB_ENGINE = create_engine(db_string)
+DB_ENGINE = create_engine(db_string, pool_size=10, max_overflow=20)
+DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 Base.metadata.bind = DB_ENGINE
 logger.info(f"Connecting to DB. Hostname: {app_config['datastore']['hostname']}, "
