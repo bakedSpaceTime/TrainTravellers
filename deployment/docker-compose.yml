@@ -96,7 +96,7 @@ services:
     build:
       context: ../Dashboard-UI
       dockerfile: Dockerfile
-    image: dashboard
+    image: dashboard:vt
     ports:
       - "3000:3000"
     hostname: dashboard
