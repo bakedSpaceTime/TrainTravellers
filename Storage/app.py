@@ -146,9 +146,6 @@ def process_messages():
         # Commit the new message as being read
         consumer.commit_offsets()
 
-# def init_app():
-#     global app_config, log_config, logger, DB_ENGINE
-
 
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
@@ -176,7 +173,6 @@ topic = connect_to_kafka()
 
 
 if __name__ == "__main__":
-    # init_app()
 
     t1 = Thread(target=process_messages)
     t1.setDaemon(True)
