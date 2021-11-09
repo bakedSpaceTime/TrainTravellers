@@ -14,6 +14,8 @@ docker build Processing/ -t processing:vt
 
 docker build Storage/ -t storage:vt
 
+docker build Dashboard/ -t dashboard:vt
+
 docker network create traintravellers
 
 docker run -d --name receiver --hostname receiver --network traintravellers -p 8080:8080 receiver:vt
@@ -23,5 +25,8 @@ docker run -d --name storage --hostname storage --network traintravellers -p 809
 docker run -d --name processing --hostname processing --network traintravellers -p 8100:8100 processing:vt
 
 docker run -d --name audit --hostname processing --network traintravellers -p 9010:9010 audit:vt
+
+docker run -d --name dashboard --hostname dashboard --network traintravellers -p 9010:9010 dashboard:vt
+
 
 docker ps -a
