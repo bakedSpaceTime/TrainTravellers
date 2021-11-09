@@ -123,6 +123,8 @@ def connect_to_kafka():
 def process_messages():
     """ Process event messages """
 
+    topic = connect_to_kafka()
+
     # Create a consume on a consumer group, that only reads new messages
     # (uncommitted messages) when the service re-starts (i.e., it doesn't
     # read all the old messages from the history in the message queue).
@@ -169,8 +171,6 @@ logger.info(f"Connecting to DB. Hostname: {app_config['datastore']['hostname']},
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
-
-topic = connect_to_kafka()
 
 
 if __name__ == "__main__":
