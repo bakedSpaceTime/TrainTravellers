@@ -8,6 +8,7 @@ import logging
 import logging.config
 from pykafka import KafkaClient
 from datetime import datetime
+from time import sleep
 
 MAX_EVENTS = 12
 EVENT_FILE = 'events.json'
