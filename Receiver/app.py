@@ -20,7 +20,6 @@ def add_train_route(body):
 
     logger.info(f"Received event /route/schedule request with a unique id of {body['route_id']}")
 
-    # res = requests.post(app_config['route_schedule']['url'], json=body, headers={"content-type": "application/json"})
     send_kafka_msg("train_route", body)
 
     logger.info(f"Returned event /route/schedule request with a unique id of {body['route_id']}")
@@ -33,7 +32,6 @@ def add_ticket_booking(body):
 
     logger.info(f"Received event /route/ticket request with a unique id of {body['ticket_id']}")
 
-    # res = requests.post(app_config['route_ticket']['url'], json=body, headers={"content-type": "application/json"})
     send_kafka_msg("ticket_booking", body)
 
     logger.info(f"Returned event /route/ticket request with a unique id of {body['ticket_id']}")
