@@ -11,6 +11,7 @@ import yaml
 from threading import Thread
 from pykafka import KafkaClient
 from pykafka.common import OffsetType
+from pykafka.exceptions import NoBrokersAvailableError
 import json
 from time import sleep
 
