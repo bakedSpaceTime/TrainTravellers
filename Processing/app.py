@@ -8,15 +8,6 @@ from datetime import datetime
 import pandas as pd
 from flask_cors import CORS, cross_origin
 
-with open('app_conf.yml', 'r') as f:
-    app_config = yaml.safe_load(f.read())
-
-with open('log_conf.yml', 'r') as f:
-    log_config = yaml.safe_load(f.read())
-    logging.config.dictConfig(log_config)
-
-logger = logging.getLogger('basicLogger')
-
 
 def populate_stats():
     """ Periodically update stats """
@@ -111,6 +102,15 @@ def get_stats():
     else:
         return {'message': "Statistics do not exist."}, 400
 
+
+with open('app_conf.yml', 'r') as f:
+    app_config = yaml.safe_load(f.read())
+
+with open('log_conf.yml', 'r') as f:
+    log_config = yaml.safe_load(f.read())
+    logging.config.dictConfig(log_config)
+
+logger = logging.getLogger('basicLogger')
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
