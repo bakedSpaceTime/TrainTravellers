@@ -49,7 +49,6 @@ def populate_stats():
                                         },
                                         headers={"content-type": "application/json"}
                                     ),
-
         "Ticket Booking": requests.get(f"{app_config['eventstore']['url']}{app_config['route_ticket']['path']}",
                                         params={
                                             'start_timestamp': prev_timestamp,
@@ -57,7 +56,6 @@ def populate_stats():
                                         },
                                         headers={"content-type": "application/json"}
                                     ),
-
     }
 
     response_has_data = True
