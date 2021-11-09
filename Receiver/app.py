@@ -11,9 +11,6 @@ from pykafka.exceptions import NoBrokersAvailableError
 from datetime import datetime
 from time import sleep
 
-MAX_EVENTS = 12
-EVENT_FILE = 'events.json'
-
 
 def add_train_route(body):
     """ Receives a new train route event """
