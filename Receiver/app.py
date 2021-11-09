@@ -7,6 +7,7 @@ import yaml
 import logging
 import logging.config
 from pykafka import KafkaClient
+from pykafka.exceptions import NoBrokersAvailableError
 from datetime import datetime
 from time import sleep
 
