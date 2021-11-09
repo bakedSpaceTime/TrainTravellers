@@ -1,6 +1,6 @@
 import connexion
 from connexion import NoContent
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
 from base import Base
 from train_route import TrainRoute
@@ -53,20 +53,34 @@ def add_ticket_booking(body):
     # return NoContent, 201
 
 
-def get_ticket_booking(timestamp):
-    timestamp_dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+def get_ticket_booking(start_timestamp, end_timestamp):
+
+    start_timestamp_dt = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    end_timestamp_dt = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
     with DB_SESSION() as session:
-        tickets = session.query(TicketBooking).filter(TicketBooking.date_created >= timestamp_dt)
+        tickets = session.query(TicketBooking).filter(
+            and_(
+                TicketBooking.date_created >= start_timestamp_dt,
+                TicketBooking.date_created < end_timestamp
+            )
+        )
 
     return [tkt.to_dict() for tkt in tickets], 200
 
 
-def get_train_route(timestamp):
-    timestamp_dt = datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+def get_train_route(start_timestamp, end_timestamp):
+
+    start_timestamp_dt = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
+    end_timestamp_dt = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
     with DB_SESSION() as session:
-        routes = session.query(TrainRoute).filter(TrainRoute.date_created >= timestamp_dt)
+        routes = session.query(TrainRoute).filter(
+            and_(
+                TrainRoute.date_created >= start_timestamp_dt,
+                TrainRoute.date_created < end_timestamp
+            )
+        )
 
     return [rt.to_dict() for rt in routes], 200
 
