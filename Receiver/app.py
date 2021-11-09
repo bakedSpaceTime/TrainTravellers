@@ -45,32 +45,6 @@ def send_kafka_msg(payload_type: str, payload):
 
     hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
 
-    max_retries = app_config['events']['max_retries']
-    retry_sleep = app_config['events']['retry_sleep']
-    retries = 0
-    connected = False
-
-    while retries < max_retries and not connected:
-        try:
-            client = KafkaClient(hosts=hostname)
-            topic = client.topics[str.encode(app_config["events"]["topic"])]
-        except NoBrokersAvailableError as err:
-            retries = retries + 1
-            logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Broker not found")
-        except Exception as err:
-            retries = retries + 1
-            logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Unknown error")
-
-        else:
-            connected = True
-            logger.info(f"Connected to Kafka broker at {app_config['events']['hostname']}")
-
-        sleep(retry_sleep)
-
-    if not connected:
-        logger.error(f"Max retries reached({max_retries}) for connecting to Kafka broker at {app_config['events']['hostname']}. Exiting application.")
-        exit()
-
     producer = topic.get_sync_producer()
 
     msg = {
@@ -95,6 +69,33 @@ logger = logging.getLogger('basicLogger')
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 
+hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
+
+max_retries = app_config['events']['max_retries']
+retry_sleep = app_config['events']['retry_sleep']
+retries = 0
+connected = False
+
+while retries < max_retries and not connected:
+    try:
+        client = KafkaClient(hosts=hostname)
+        topic = client.topics[str.encode(app_config["events"]["topic"])]
+    except NoBrokersAvailableError as err:
+        retries = retries + 1
+        logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Broker not found")
+    except Exception as err:
+        retries = retries + 1
+        logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Unknown error")
+
+    else:
+        connected = True
+        logger.info(f"Connected to Kafka broker at {app_config['events']['hostname']}")
+
+    sleep(retry_sleep)
+
+if not connected:
+    logger.error(f"Max retries reached({max_retries}) for connecting to Kafka broker at {app_config['events']['hostname']}. Exiting application.")
+    exit()
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
