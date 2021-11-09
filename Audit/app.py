@@ -6,9 +6,6 @@ from pykafka.common import OffsetType
 import json
 from flask_cors import CORS, cross_origin
 
-# def init_app():
-#   global app_config, log_config, logger
-
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
 
@@ -94,8 +91,6 @@ CORS(app.app)
 app.app.config['CORS_HEADERS'] = 'Content-Type'
 
 if __name__ == "__main__":
-    # init_app()
     print("INIT", logger, app_config)
 
     app.run(port=9010, debug=False)
-    # use_reloader=False
