@@ -86,8 +86,7 @@ def get_train_route(start_timestamp, end_timestamp):
     return [rt.to_dict() for rt in routes], 200
 
 
-def process_messages():
-    """ Process event messages """
+def connect_to_kafka():
 
     hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
 
@@ -116,6 +115,12 @@ def process_messages():
     if not connected:
         logger.error(f"Max retries reached({max_retries}) for connecting to Kafka broker at {app_config['events']['hostname']}. Exiting application.")
         exit()
+    else:
+        return topic
+
+
+def process_messages():
+    """ Process event messages """
 
     # Create a consume on a consumer group, that only reads new messages
     # (uncommitted messages) when the service re-starts (i.e., it doesn't
@@ -166,6 +171,9 @@ logger.info(f"Connecting to DB. Hostname: {app_config['datastore']['hostname']},
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
+
+topic = connect_to_kafka()
+
 
 if __name__ == "__main__":
     # init_app()
