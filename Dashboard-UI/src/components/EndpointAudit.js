@@ -5,6 +5,7 @@ export default function EndpointAudit(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [log, setLog] = useState(null);
   const [error, setError] = useState(null)
+  const [index, setIndex] = useState(null);
 
   const rand_val = Math.floor(Math.random() * 100); // Get a random event from the event store
 
@@ -14,6 +15,7 @@ export default function EndpointAudit(props) {
       .then(res => res.json())
       .then((result)=>{
         console.log("Received Audit Results for " + props.endpoint)
+        setIndex(rand_val);
         setLog(result);
         setIsLoaded(true);
       },(error) =>{
@@ -33,7 +35,7 @@ export default function EndpointAudit(props) {
   } else if (isLoaded === true){
     return (
       <div>
-      <h3>{props.endpoint}-{rand_val}</h3>
+      <h3>{props.endpoint}-{index}</h3>
       {JSON.stringify(log)}
       </div>
     )
