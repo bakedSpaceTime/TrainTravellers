@@ -2,7 +2,8 @@ version: 1
 datastore:
   user: 'train_user'
   password: 'TrAiNtRaVeLlErs'
-  hostname: 'kafka-ti-acit3855.eastus2.cloudapp.azure.com'
+  # hostname: 'kafka-ti-acit3855.eastus2.cloudapp.azure.com'
+  hostname: 'database'
   port: 3306
   db: traintravellers
 events:
