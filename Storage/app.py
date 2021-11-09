@@ -15,6 +15,7 @@ from pykafka.exceptions import NoBrokersAvailableError
 import json
 from time import sleep
 
+
 def add_train_route(body):
     """ Receives a train route schedule """
 
@@ -153,6 +154,7 @@ with open('app_conf.yml', 'r') as f:
 with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
+
 logger = logging.getLogger('basicLogger')
 
 db_string = (f'mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@'
@@ -164,7 +166,6 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 Base.metadata.bind = DB_ENGINE
 logger.info(f"Connecting to DB. Hostname: {app_config['datastore']['hostname']}, "
             f"Port: {app_config['datastore']['port']}")
-
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
