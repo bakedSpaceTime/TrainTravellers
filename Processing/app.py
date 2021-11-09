@@ -41,12 +41,23 @@ def populate_stats():
     prev_timestamp = prev_entry['date_created']
 
     responses = {
-        "Route Schedules": requests.get(f"{app_config['eventstore']['url']}{app_config['route_schedule']['path']}",
-                                        params={'timestamp': prev_timestamp},
-                                        headers={"content-type": "application/json"}),
+        "Route Schedules": requests.get(
+                                        f"{app_config['eventstore']['url']}{app_config['route_schedule']['path']}",
+                                        params={
+                                            'start_timestamp': prev_timestamp,
+                                            'end_timestamp': cur_timestamp,
+                                        },
+                                        headers={"content-type": "application/json"}
+                                    ),
+
         "Ticket Booking": requests.get(f"{app_config['eventstore']['url']}{app_config['route_ticket']['path']}",
-                                       params={'timestamp': prev_timestamp},
-                                       headers={"content-type": "application/json"}),
+                                        params={
+                                            'start_timestamp': prev_timestamp,
+                                            'end_timestamp': cur_timestamp,
+                                        },
+                                        headers={"content-type": "application/json"}
+                                    ),
+
     }
 
     response_has_data = True
