@@ -6,15 +6,6 @@ from pykafka.common import OffsetType
 import json
 from flask_cors import CORS, cross_origin
 
-with open('app_conf.yml', 'r') as f:
-    app_config = yaml.safe_load(f.read())
-
-with open('log_conf.yml', 'r') as f:
-    log_config = yaml.safe_load(f.read())
-    logging.config.dictConfig(log_config)
-    logger = logging.getLogger('basicLogger')
-
-
 
 def get_train_route_reading(index):
     """ Get Train Route schedule in History """
@@ -82,6 +73,14 @@ def get_message(consumer, index, payload_type):
 
     return ret
 
+
+with open('app_conf.yml', 'r') as f:
+    app_config = yaml.safe_load(f.read())
+
+with open('log_conf.yml', 'r') as f:
+    log_config = yaml.safe_load(f.read())
+    logging.config.dictConfig(log_config)
+    logger = logging.getLogger('basicLogger')
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
