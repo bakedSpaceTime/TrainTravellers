@@ -22,9 +22,15 @@ paths:
       operationId: app.get_train_route
       description: Returns a list of scheduled train routes
       parameters:
-        - name: timestamp
+        - name: start_timestamp
           in: query
-          description: limits number of train routes returned by timestamp
+          description: start limit number of train routes returned by timestamp
+          schema:
+            type: string
+            format: date-time
+        - name: end_timestamp
+          in: query
+          description: end limit number of train routes returned by timestamp
           schema:
             type: string
             format: date-time
@@ -51,9 +57,15 @@ paths:
       operationId: app.get_ticket_booking
       description: Returns a list of ticket bookings
       parameters:
-        - name: timestamp
+        - name: start_timestamp
           in: query
-          description: limits number of ticket bookings returned by timestamp
+          description: start limit number of ticket bookings returned by timestamp
+          schema:
+            type: string
+            format: date-time
+        - name: end_timestamp
+          in: query
+          description: end limit number of ticket bookings returned by timestamp
           schema:
             type: string
             format: date-time
