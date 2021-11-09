@@ -14,7 +14,6 @@ with open('log_conf.yml', 'r') as f:
     logging.config.dictConfig(log_config)
     logger = logging.getLogger('basicLogger')
 
-print("INIT", logger, app_config)
 
 
 def get_train_route_reading(index):
@@ -91,6 +90,4 @@ CORS(app.app)
 app.app.config['CORS_HEADERS'] = 'Content-Type'
 
 if __name__ == "__main__":
-    print("INIT", logger, app_config)
-
     app.run(port=9010, debug=False)
