@@ -66,7 +66,7 @@ def connect_to_kafka():
         logger.error(f"Max retries reached({max_retries}) for connecting to Kafka broker at {app_config['events']['hostname']}. Exiting application.")
         exit()
     else:
-        return topic
+        return producer
 
 
 def send_kafka_msg(payload_type: str, payload):
@@ -96,7 +96,7 @@ logger = logging.getLogger('basicLogger')
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 
-topic = connect_to_kafka()
+producer = connect_to_kafka()
 
 
 if __name__ == '__main__':
