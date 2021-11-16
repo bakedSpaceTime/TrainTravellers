@@ -57,6 +57,7 @@ services:
       - traintravellers
     volumes:
       - /home/azureuser/config/receiver:/config
+      - /home/azureuser/logs:/logs
     depends_on:
       - "kafka"
   storage:
@@ -73,6 +74,7 @@ services:
       - traintravellers
     volumes:
       - /home/azureuser/config/storage:/config
+      - /home/azureuser/logs:/logs
     depends_on:
       - "kafka"
       - "db"
@@ -90,6 +92,7 @@ services:
       - traintravellers
     volumes:
       - /home/azureuser/config/processing:/config
+      - /home/azureuser/logs:/logs
     depends_on:
       - "storage"
   audit:
@@ -106,6 +109,7 @@ services:
       - traintravellers
     volumes:
       - /home/azureuser/config/audit:/config
+      - /home/azureuser/logs:/logs
     depends_on:
       - "kafka"
   dashboard:
