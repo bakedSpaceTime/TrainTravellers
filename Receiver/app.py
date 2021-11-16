@@ -48,6 +48,7 @@ def connect_to_kafka():
         try:
             client = KafkaClient(hosts=hostname)
             topic = client.topics[str.encode(app_config["events"]["topic"])]
+            producer = topic.get_sync_producer()
         except NoBrokersAvailableError as err:
             retries = retries + 1
             logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Broker not found")
@@ -72,8 +73,6 @@ def send_kafka_msg(payload_type: str, payload):
     """ Sends message to kafka broker """
 
     hostname = f"{app_config['events']['hostname']}:{app_config['events']['port']}"
-
-    producer = topic.get_sync_producer()
 
     msg = {
         "type": payload_type,
