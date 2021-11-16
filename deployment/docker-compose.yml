@@ -53,6 +53,8 @@ services:
     hostname: receiver
     networks:
       - traintravellers
+    volumes:
+      - /home/azureuser/config/receiver:/config
     depends_on:
       - "kafka"
   storage:
@@ -65,6 +67,8 @@ services:
     hostname: storage
     networks:
       - traintravellers
+    volumes:
+      - /home/azureuser/config/storage:/config
     depends_on:
       - "kafka"
       - "db"
@@ -78,6 +82,8 @@ services:
     hostname: processing
     networks:
       - traintravellers
+    volumes:
+      - /home/azureuser/config/processing:/config
     depends_on:
       - "storage"
   audit:
@@ -90,6 +96,8 @@ services:
     hostname: audit
     networks:
       - traintravellers
+    volumes:
+      - /home/azureuser/config/audit:/config
     depends_on:
       - "kafka"
   dashboard:
