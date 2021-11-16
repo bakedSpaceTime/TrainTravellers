@@ -48,6 +48,8 @@ services:
       context: ../Receiver
       dockerfile: Dockerfile
     image: receiver:vt
+    environment:
+      -TARGET_ENV=test
     ports:
       - 8080:8080
     hostname: receiver
@@ -62,6 +64,8 @@ services:
       context: ../Storage
       dockerfile: Dockerfile
     image: storage:vt
+    environment:
+      -TARGET_ENV=test
     ports:
       - 8090:8090
     hostname: storage
@@ -77,6 +81,8 @@ services:
       context: ../Processing
       dockerfile: Dockerfile
     image: processing:vt
+    environment:
+      -TARGET_ENV=test
     ports:
       - 8100:8100
     hostname: processing
@@ -91,6 +97,8 @@ services:
       context: ../Audit
       dockerfile: Dockerfile
     image: audit:vt
+    environment:
+      -TARGET_ENV=test
     ports:
       - 9010:9010
     hostname: audit
