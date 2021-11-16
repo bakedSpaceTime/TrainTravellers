@@ -93,6 +93,7 @@ services:
     volumes:
       - /home/azureuser/config/processing:/config
       - /home/azureuser/logs:/logs
+      - processing-db:/data
     depends_on:
       - "storage"
   audit:
@@ -127,6 +128,6 @@ services:
       - "audit"
 networks:
   traintravellers: {}
-# Names our volume
 volumes:
-  my-db:
+  my-db: {}
+  processing-db: {}
