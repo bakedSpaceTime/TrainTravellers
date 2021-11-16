@@ -5,6 +5,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 import json
 from flask_cors import CORS, cross_origin
+import os
 
 
 def get_train_route_reading(index):
@@ -74,6 +75,13 @@ def get_message(consumer, index, payload_type):
     return ret
 
 
+if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
+  app_conf_file = "/config/app_conf.yml"
+  log_conf_file = "/config/log_conf.yml"
+else:
+  app_conf_file = "app_conf.yml"
+  log_conf_file = "log_conf.yml"
+
 with open('app_conf.yml', 'r') as f:
     app_config = yaml.safe_load(f.read())
 
@@ -83,6 +91,8 @@ with open('log_conf.yml', 'r') as f:
 
 logger = logging.getLogger('basicLogger')
 
+logger.info(f"App Conf File: {app_conf_file}")
+logger.info(f"Log Conf File: {log_conf_file}")
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
