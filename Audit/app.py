@@ -80,7 +80,8 @@ with open('app_conf.yml', 'r') as f:
 with open('log_conf.yml', 'r') as f:
     log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
-    logger = logging.getLogger('basicLogger')
+
+logger = logging.getLogger('basicLogger')
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
