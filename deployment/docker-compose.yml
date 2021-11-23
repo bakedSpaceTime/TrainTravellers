@@ -51,7 +51,7 @@ services:
     environment:
       - TARGET_ENV=test
     ports:
-      - 8080:8080
+      - 8080
     hostname: receiver
     networks:
       - traintravellers
@@ -68,7 +68,7 @@ services:
     environment:
       - TARGET_ENV=test
     ports:
-      - 8090:8090
+      - 8090
     hostname: storage
     networks:
       - traintravellers
@@ -86,7 +86,7 @@ services:
     environment:
       - TARGET_ENV=test
     ports:
-      - 8100:8100
+      - 8100
     hostname: processing
     networks:
       - traintravellers
@@ -104,7 +104,7 @@ services:
     environment:
       - TARGET_ENV=test
     ports:
-      - 8110:8100
+      - 8110
     hostname: audit
     networks:
       - traintravellers
