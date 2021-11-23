@@ -68,7 +68,7 @@ def get_ticket_booking(start_timestamp, end_timestamp):
                 TicketBooking.date_created < end_timestamp_dt
             )
         )
-    logger.info(f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned {len(tickets)} results")
+    logger.info(f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned ")#{len(tickets)} results")
 
     return [tkt.to_dict() for tkt in tickets], 200
 
@@ -86,7 +86,7 @@ def get_train_route(start_timestamp, end_timestamp):
             )
         )
 
-    logger.info(f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned {len(routes)} results")
+    logger.info(f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned ")#"{len(routes)} results")
 
     return [rt.to_dict() for rt in routes], 200
 
