@@ -100,4 +100,4 @@ CORS(app.app)
 app.app.config['CORS_HEADERS'] = 'Content-Type'
 
 if __name__ == "__main__":
-    app.run(port=9010, debug=False)
+    app.run(port=8110, debug=False)

@@ -104,7 +104,7 @@ services:
     environment:
       - TARGET_ENV=test
     ports:
-      - 9010:9010
+      - 8110:8100
     hostname: audit
     networks:
       - traintravellers
