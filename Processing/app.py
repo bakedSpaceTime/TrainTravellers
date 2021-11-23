@@ -124,7 +124,7 @@ logger.info(f"App Conf File: {app_conf_file}")
 logger.info(f"Log Conf File: {log_conf_file}")
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
+app.add_api("openapi.yml", base_path="/processing", strict_validation=True, validate_responses=True)
 CORS(app.app)
 app.app.config['CORS_HEADERS'] = 'Content-Type'
 

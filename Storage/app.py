@@ -181,7 +181,7 @@ logger.info(f"Connecting to DB. Hostname: {app_config['datastore']['hostname']},
             f"Port: {app_config['datastore']['port']}")
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
+app.add_api("openapi.yml", base_path="/storage", strict_validation=True, validate_responses=True)
 
 
 if __name__ == "__main__":
