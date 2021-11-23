@@ -4,7 +4,7 @@ datastore:
 scheduler:
   period_sec: 5
 eventstore:
-  url: http://storage:8090
+  url: http://storage:8090/storage
 route_schedule:
   path: /route/schedule
 route_ticket:
