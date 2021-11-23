@@ -55,7 +55,7 @@ def populate_stats():
         if not res_data.status_code == 200:
             logger.error(f"Failed to retrieve {res_type} created after the time: {prev_timestamp}. "
                          f"Status code: {res_data.status_code}")
-             response_has_data = False
+            response_has_data = False
         else:
             logger.info(f"Received {len(res_data.json())} {res_type}from Storage Service")
             response_has_data = response_has_data and len(res_data.json()) != 0
