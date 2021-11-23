@@ -61,6 +61,7 @@ def get_ticket_booking(start_timestamp, end_timestamp):
     start_timestamp_dt = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
     end_timestamp_dt = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
+    logger.info(f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} received ")#{len(tickets)} results")
     with DB_SESSION() as session:
         tickets = session.query(TicketBooking).filter(
             and_(
