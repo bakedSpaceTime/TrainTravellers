@@ -87,7 +87,6 @@ services:
       - TARGET_ENV=test
     ports:
       - 8100
-    hostname: processing
     networks:
       - traintravellers
     volumes:
