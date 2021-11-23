@@ -87,6 +87,7 @@ services:
       - ./env
     ports:
       - 8100
+    hostname: processing
     networks:
       - traintravellers
     volumes:
