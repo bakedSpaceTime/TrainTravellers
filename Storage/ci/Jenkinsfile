@@ -1,3 +1,3 @@
 @Library('tushya-assignment3') _
 
-python_build("Storage", "storage", "storage", 8090)
+python_build("Storage", "storage", "latest", 8090)
