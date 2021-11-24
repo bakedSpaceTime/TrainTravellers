@@ -61,7 +61,9 @@ def get_ticket_booking(start_timestamp, end_timestamp):
     start_timestamp_dt = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
     end_timestamp_dt = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
-    logger.info(f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} received ")#{len(tickets)} results")
+    logger.info(
+        f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} received"
+    )
     with DB_SESSION() as session:
         tickets = session.query(TicketBooking).filter(
             and_(
@@ -69,8 +71,10 @@ def get_ticket_booking(start_timestamp, end_timestamp):
                 TicketBooking.date_created < end_timestamp_dt
             )
         )
-    logger.info(f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned ")#{len(tickets)} results")
-
+    logger.info(
+        f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned "
+        # f"{len(tickets)} results"
+    )
     return [tkt.to_dict() for tkt in tickets], 200
 
 
@@ -79,6 +83,9 @@ def get_train_route(start_timestamp, end_timestamp):
     start_timestamp_dt = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
     end_timestamp_dt = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M:%S.%fZ")
 
+    logger.info(
+        f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} received"
+    )
     with DB_SESSION() as session:
         routes = session.query(TrainRoute).filter(
             and_(
@@ -87,7 +94,10 @@ def get_train_route(start_timestamp, end_timestamp):
             )
         )
 
-    logger.info(f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned ")#"{len(routes)} results")
+    logger.info(
+        f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned"
+        # f"{len(tickets)} results"
+    )
 
     return [rt.to_dict() for rt in routes], 200
 
@@ -107,10 +117,16 @@ def connect_to_kafka():
             topic = client.topics[str.encode(app_config["events"]["topic"])]
         except NoBrokersAvailableError as err:
             retries = retries + 1
-            logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Broker not found")
+            logger.error(
+                f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. "
+                f"Broker not found"
+            )
         except Exception as err:
             retries = retries + 1
-            logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Unknown error")
+            logger.error(
+                f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. "
+                f"Unknown error"
+            )
 
         else:
             connected = True
@@ -119,7 +135,10 @@ def connect_to_kafka():
         sleep(retry_sleep)
 
     if not connected:
-        logger.error(f"Max retries reached({max_retries}) for connecting to Kafka broker at {app_config['events']['hostname']}. Exiting application.")
+        logger.error(
+            f"Max retries reached({max_retries}) for connecting to Kafka broker at "
+            f"{app_config['events']['hostname']}. Exiting application."
+        )
         exit()
     else:
         return topic
@@ -174,8 +193,11 @@ logger = logging.getLogger('basicLogger')
 logger.info(f"App Conf File: {APP_CONF_FILE}")
 logger.info(f"Log Conf File: {LOG_CONF_FILE}")
 
-db_string = (f'mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@'
-             f'{app_config["datastore"]["hostname"]}:{app_config["datastore"]["port"]}/{app_config["datastore"]["db"]}')
+db_string = (
+    f'mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@'
+    f'{app_config["datastore"]["hostname"]}:{app_config["datastore"]["port"]}/"
+    f"{app_config["datastore"]["db"]}'
+)
 
 DB_ENGINE = create_engine(db_string, pool_size=10, max_overflow=20)
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
