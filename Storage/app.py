@@ -194,9 +194,9 @@ logger.info(f"App Conf File: {APP_CONF_FILE}")
 logger.info(f"Log Conf File: {LOG_CONF_FILE}")
 
 db_string = (
-    f'mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@'
-    f'{app_config["datastore"]["hostname"]}:{app_config["datastore"]["port"]}/"
-    f"{app_config["datastore"]["db"]}'
+    f"mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@"
+    f"{app_config["datastore"]["hostname"]}:{app_config["datastore"]["port"]}/"
+    f"{app_config["datastore"]["db"]}"
 )
 
 DB_ENGINE = create_engine(db_string, pool_size=10, max_overflow=20)
