@@ -1,4 +1,3 @@
-import connexion
 import requests
 from connexion import NoContent
 import json
@@ -11,6 +10,7 @@ from pykafka.exceptions import NoBrokersAvailableError
 from datetime import datetime
 from time import sleep
 import os
+import connexion
 
 
 def add_train_route(body):
@@ -52,10 +52,16 @@ def connect_to_kafka():
             producer = topic.get_sync_producer()
         except NoBrokersAvailableError as err:
             retries = retries + 1
-            logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Broker not found")
+            logger.error(
+                f"Failed to connect to Kafka broker at {app_config['events']['hostname']}."
+                f" Broker not found"
+            )
         except Exception as err:
             retries = retries + 1
-            logger.error(f"Failed to connect to Kafka broker at {app_config['events']['hostname']}. Unknown error")
+            logger.error(
+                f"Failed to connect to Kafka broker at {app_config['events']['hostname']}."
+                f" Unknown error"
+            )
 
         else:
             connected = True
@@ -64,7 +70,10 @@ def connect_to_kafka():
         sleep(retry_sleep)
 
     if not connected:
-        logger.error(f"Max retries reached({max_retries}) for connecting to Kafka broker at {app_config['events']['hostname']}. Exiting application.")
+        logger.error(
+            f"Max retries reached({max_retries}) for connecting to Kafka broker at "
+            f"{app_config['events']['hostname']}. Exiting application."
+        )
         exit()
     else:
         return producer
@@ -86,16 +95,16 @@ def send_kafka_msg(payload_type: str, payload):
 
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
-  app_conf_file = "/config/app_conf.yml"
-  log_conf_file = "/config/log_conf.yml"
+    APP_CONF_FILE = "/config/app_conf.yml"
+    LOG_CONF_FILE = "/config/log_conf.yml"
 else:
-  app_conf_file = "app_conf.yml"
-  log_conf_file = "log_conf.yml"
+    APP_CONF_FILE = "app_conf.yml"
+    LOG_CONF_FILE = "log_conf.yml"
 
-with open(app_conf_file, 'r') as f:
+with open(APP_CONF_FILE, 'r') as f:
     app_config = yaml.safe_load(f.read())
 
-with open(log_conf_file, 'r') as f:
+with open(LOG_CONF_FILE, 'r') as f:
     log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
 
