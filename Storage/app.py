@@ -209,6 +209,7 @@ logger.info(f"Connecting to DB. Hostname: {app_config['datastore']['hostname']},
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", base_path="/storage", strict_validation=True, validate_responses=True)
 
+logger.info("test log")
 
 if __name__ == "__main__":
 
