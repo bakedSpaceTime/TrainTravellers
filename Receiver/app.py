@@ -2,11 +2,11 @@ import json
 from pathlib import Path
 import logging
 import logging.config
-from pykafka import KafkaClient
-from pykafka.exceptions import NoBrokersAvailableError
 from datetime import datetime
 from time import sleep
 import os
+from pykafka import KafkaClient
+from pykafka.exceptions import NoBrokersAvailableError
 import yaml
 import requests
 import connexion
