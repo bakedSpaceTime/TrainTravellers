@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 import logging
 import logging.config
 from datetime import datetime
@@ -8,7 +7,6 @@ import os
 from pykafka import KafkaClient
 from pykafka.exceptions import NoBrokersAvailableError
 import yaml
-import requests
 import connexion
 from connexion import NoContent
 
