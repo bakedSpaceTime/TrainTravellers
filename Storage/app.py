@@ -156,23 +156,23 @@ def process_messages():
 
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
-  app_conf_file = "/config/app_conf.yml"
-  log_conf_file = "/config/log_conf.yml"
+    APP_CONF_FILE = "/config/app_conf.yml"
+    LOG_CONF_FILE = "/config/log_conf.yml"
 else:
-  app_conf_file = "app_conf.yml"
-  log_conf_file = "log_conf.yml"
+    APP_CONF_FILE = "app_conf.yml"
+    LOG_CONF_FILE = "log_conf.yml"
 
-with open(app_conf_file, 'r') as f:
+with open(APP_CONF_FILE, 'r') as f:
     app_config = yaml.safe_load(f.read())
 
-with open(log_conf_file, 'r') as f:
+with open(LOG_CONF_FILE, 'r') as f:
     log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
 
 logger = logging.getLogger('basicLogger')
 
-logger.info(f"App Conf File: {app_conf_file}")
-logger.info(f"Log Conf File: {log_conf_file}")
+logger.info(f"App Conf File: {APP_CONF_FILE}")
+logger.info(f"Log Conf File: {LOG_CONF_FILE}")
 
 db_string = (f'mysql+pymysql://{app_config["datastore"]["user"]}:{app_config["datastore"]["password"]}@'
              f'{app_config["datastore"]["hostname"]}:{app_config["datastore"]["port"]}/{app_config["datastore"]["db"]}')
