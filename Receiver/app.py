@@ -111,8 +111,8 @@ with open(LOG_CONF_FILE, 'r') as f:
 
 logger = logging.getLogger('basicLogger')
 
-logger.info(f"App Conf File: {app_conf_file}")
-logger.info(f"Log Conf File: {log_conf_file}")
+logger.info(f"App Conf File: {APP_CONF_FILE}")
+logger.info(f"Log Conf File: {LOG_CONF_FILE}")
 
 app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", base_path="/receiver", strict_validation=True, validate_responses=True)
