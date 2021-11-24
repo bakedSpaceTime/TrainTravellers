@@ -210,6 +210,7 @@ app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", base_path="/storage", strict_validation=True, validate_responses=True)
 
 logger.info("test log")
+logger.info("test log2")
 
 if __name__ == "__main__":
 
