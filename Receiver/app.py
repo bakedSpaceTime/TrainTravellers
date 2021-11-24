@@ -1,4 +1,3 @@
-import requests
 from connexion import NoContent
 import json
 from pathlib import Path
@@ -10,6 +9,7 @@ from pykafka.exceptions import NoBrokersAvailableError
 from datetime import datetime
 from time import sleep
 import os
+import requests
 import connexion
 
 
