@@ -163,19 +163,20 @@ def process_messages():
 
     # This is blocking - it will wait for a new message
     for msg in consumer:
-        msg_str = msg.value.decode('utf-8')
-        msg = json.loads(msg_str)
-        logger.info(f"Message:{msg}")
-        payload = msg["payload"]
+        if msg is not None:
+            msg_str = msg.value.decode('utf-8')
+            msg = json.loads(msg_str)
+            logger.info(f"Message:{msg}")
+            payload = msg["payload"]
 
-        if msg["type"] == "train_route":
-            add_train_route(payload)
+            if msg["type"] == "train_route":
+                add_train_route(payload)
 
-        elif msg["type"] == "ticket_booking":
-            add_ticket_booking(payload)
+            elif msg["type"] == "ticket_booking":
+                add_ticket_booking(payload)
 
-        # Commit the new message as being read
-        consumer.commit_offsets()
+            # Commit the new message as being read
+            consumer.commit_offsets()
 
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":

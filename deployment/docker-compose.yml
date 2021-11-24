@@ -5,6 +5,8 @@ services:
     ports:
       - "2181"
     hostname: zookeeper
+    networks:
+      - traintravellers
     volumes:
        - /home/azureuser/zookeeper/data:/opt/zookeeper-3.4.13/data
   kafka:
@@ -13,6 +15,8 @@ services:
     ports:
       - "9092:9092"
     hostname: Kafka
+    networks:
+      - traintravellers
     environment:
       KAFKA_CREATE_TOPICS: "events:2:1" # topic:partition:replicas
       KAFKA_ADVERTISED_HOST_NAME: kafka-ti-acit3855.eastus2.cloudapp.azure.com # docker-machine ip
