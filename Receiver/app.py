@@ -1,4 +1,3 @@
-from connexion import NoContent
 import json
 from pathlib import Path
 import yaml
@@ -11,6 +10,7 @@ from time import sleep
 import os
 import requests
 import connexion
+from connexion import NoContent
 
 #test comment
 
