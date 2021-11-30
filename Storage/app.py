@@ -117,7 +117,7 @@ def get_train_route(start_timestamp, end_timestamp):
     routes = []
     for rt in routes_results:
         routes.append(rt.to_dict())
-
+    logger.info(f"route results{routes_results}")
     session.commit()
     session.close()
 
