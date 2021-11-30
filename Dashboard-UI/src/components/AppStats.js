@@ -9,7 +9,7 @@ export default function AppStats() {
 	const getStats = () => {
 
         // fetch(`http://localhost:8100/route/stats`)
-        fetch(`http://kafka-ti-acit3855.eastus2.cloudapp.azure.com/processing/route/stats`)
+        fetch(`http://notkafka-ti-acit3855.eastus2.cloudapp.azure.com/processing/route/stats`)
             .then(res => res.json())
             .then((result)=>{
 				console.log("Received Stats")
