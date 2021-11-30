@@ -31,11 +31,13 @@ def add_train_route(body):
 
     # with DB_SESSION() as session:
     session = DB_SESSION()
-
-    session.add(tr)
-
-    session.commit()
-    session.close()
+    try:
+        session.add(tr)
+        session.commit()
+    except Exception as err:
+        basicLogger.error(f"error occured saving Train Route. {err}")
+    finally:
+        session.close()
 
     logger.debug(f"Stored event /route/schedule request with a unique id of {body['route_id']}")
 
@@ -54,11 +56,13 @@ def add_ticket_booking(body):
     # with DB_SESSION() as session:
     session = DB_SESSION()
 
-    session.add(tb)
-
-    session.commit()
-    session.close()
-
+    try:
+        session.add(tb)
+        session.commit()
+    except Exception as err:
+        basicLogger.error(f"error occured saving Ticket Booking. {err}")
+    finally:
+        session.close()
     logger.debug(f"Stored event /route/book request with a unique id of {body['ticket_id']}")
 
     # return NoContent, 201
@@ -75,19 +79,23 @@ def get_ticket_booking(start_timestamp, end_timestamp):
     # with DB_SESSION() as session:
     session = DB_SESSION()
 
-    ticket_results = session.query(TicketBooking).filter(
-        and_(
-            TicketBooking.date_created >= start_timestamp_dt,
-            TicketBooking.date_created < end_timestamp_dt
+    try:
+        ticket_results = session.query(TicketBooking).filter(
+            # and_(
+                TicketBooking.date_created >= start_timestamp_dt,
+                TicketBooking.date_created < end_timestamp_dt
+            # )
         )
-    )
 
-    tickets = []
-    for tk in ticket_results:
-        tickets.append(tk.to_dict())
-    logger.info(f"route results{ticket_results}")
+        tickets = []
+        for tk in ticket_results:
+            tickets.append(tk.to_dict())
+        logger.info(f"route results{ticket_results}")
 
-    session.close()
+    except Exception as err:
+        basicLogger.error(f"error occured saving Train Route. {err}")
+    finally:
+        session.close()
 
     logger.info(
         f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned "
@@ -107,19 +115,23 @@ def get_train_route(start_timestamp, end_timestamp):
     # with DB_SESSION() as session:
     session = DB_SESSION()
 
-    routes_results = session.query(TrainRoute).filter(
-        # and_(
-            TrainRoute.date_created >= start_timestamp_dt,
-            TrainRoute.date_created < end_timestamp_dt
-        # )
-    )
+    try:
+        routes_results = session.query(TrainRoute).filter(
+            # and_(
+                TrainRoute.date_created >= start_timestamp_dt,
+                TrainRoute.date_created < end_timestamp_dt
+            # )
+        )
 
-    routes = []
-    for rt in routes_results:
-        routes.append(rt.to_dict())
-    logger.info(f"route results{routes_results}")
+        routes = []
+        for rt in routes_results:
+            routes.append(rt.to_dict())
+        logger.info(f"route results{routes_results}")
 
-    session.close()
+    except Exception as err:
+        basicLogger.error(f"error occured saving Train Route. {err}")
+    finally:
+        session.close()
 
     logger.info(
         f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned"
