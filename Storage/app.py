@@ -84,7 +84,7 @@ def get_ticket_booking(start_timestamp, end_timestamp):
 
     tickets = []
     for tk in ticket_results:
-        tickets.append(rk.to_dict())
+        tickets.append(tk.to_dict())
     logger.info(f"route results{routes_results}")
 
     session.close()
