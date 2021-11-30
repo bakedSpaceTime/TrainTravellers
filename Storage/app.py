@@ -126,7 +126,7 @@ def get_train_route(start_timestamp, end_timestamp):
         f"{len(routes)} results"
     )
 
-    return route, 200
+    return routes, 200
 
 
 def connect_to_kafka():
