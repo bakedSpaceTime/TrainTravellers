@@ -108,10 +108,10 @@ def get_train_route(start_timestamp, end_timestamp):
     session = DB_SESSION()
 
     routes_results = session.query(TrainRoute).filter(
-        and_(
+        # and_(
             TrainRoute.date_created >= start_timestamp_dt,
             TrainRoute.date_created < end_timestamp_dt
-        )
+        # )
     )
 
     routes = []
