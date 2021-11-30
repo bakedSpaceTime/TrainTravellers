@@ -54,7 +54,7 @@ def add_ticket_booking(body):
     # with DB_SESSION() as session:
     session = DB_SESSION()
 
-    session.add(tr)
+    session.add(tb)
 
     session.commit()
     session.close()
@@ -86,7 +86,7 @@ def get_ticket_booking(start_timestamp, end_timestamp):
     for tk in ticket_results:
         tickets.append(rk.to_dict())
     logger.info(f"route results{routes_results}")
-    
+
     session.close()
 
     logger.info(
