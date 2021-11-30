@@ -29,9 +29,13 @@ def add_train_route(body):
                     est_dept_tm_obj,
                     body['estimated_travel_time'], )
 
-    with DB_SESSION() as session:
-        session.add(tr)
-        session.commit()
+    # with DB_SESSION() as session:
+    session = DB_SESSION()
+
+    session.add(tr)
+
+    session.commit()
+    session.close()
 
     logger.debug(f"Stored event /route/schedule request with a unique id of {body['route_id']}")
 
@@ -47,9 +51,13 @@ def add_ticket_booking(body):
                        body['customer_email'],
                        body['route_id'])
 
-    with DB_SESSION() as session:
-        session.add(tb)
-        session.commit()
+    # with DB_SESSION() as session:
+    session = DB_SESSION()
+
+    session.add(tr)
+
+    session.commit()
+    session.close()
 
     logger.debug(f"Stored event /route/book request with a unique id of {body['ticket_id']}")
 
@@ -64,13 +72,18 @@ def get_ticket_booking(start_timestamp, end_timestamp):
     logger.info(
         f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} received"
     )
-    with DB_SESSION() as session:
-        tickets = session.query(TicketBooking).filter(
-            and_(
-                TicketBooking.date_created >= start_timestamp_dt,
-                TicketBooking.date_created < end_timestamp_dt
-            )
+    # with DB_SESSION() as session:
+    session = DB_SESSION()
+
+    tickets = session.query(TicketBooking).filter(
+        and_(
+            TicketBooking.date_created >= start_timestamp_dt,
+            TicketBooking.date_created < end_timestamp_dt
         )
+    )
+    session.commit()
+    session.close()
+
     logger.info(
         f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned "
         # f"{len(tickets)} results"
@@ -86,13 +99,17 @@ def get_train_route(start_timestamp, end_timestamp):
     logger.info(
         f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} received"
     )
-    with DB_SESSION() as session:
-        routes = session.query(TrainRoute).filter(
-            and_(
-                TrainRoute.date_created >= start_timestamp_dt,
-                TrainRoute.date_created < end_timestamp_dt
-            )
+    # with DB_SESSION() as session:
+    session = DB_SESSION()
+    
+    routes = session.query(TrainRoute).filter(
+        and_(
+            TrainRoute.date_created >= start_timestamp_dt,
+            TrainRoute.date_created < end_timestamp_dt
         )
+    )
+    session.commit()
+    session.close()
 
     logger.info(
         f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned"
