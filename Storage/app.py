@@ -75,20 +75,25 @@ def get_ticket_booking(start_timestamp, end_timestamp):
     # with DB_SESSION() as session:
     session = DB_SESSION()
 
-    tickets = session.query(TicketBooking).filter(
+    ticket_results = session.query(TicketBooking).filter(
         and_(
             TicketBooking.date_created >= start_timestamp_dt,
             TicketBooking.date_created < end_timestamp_dt
         )
     )
+
+    tickets = []
+    for tk in ticket_results:
+        tickets.append(rk.to_dict())
+
     session.commit()
     session.close()
 
     logger.info(
         f"Request for Ticket Bookings between {start_timestamp_dt} and {end_timestamp_dt} returned "
-        # f"{len(tickets)} results"
+        f"{len(tickets)} results"
     )
-    return [tkt.to_dict() for tkt in tickets], 200
+    return tickets, 200
 
 
 def get_train_route(start_timestamp, end_timestamp):
@@ -101,22 +106,27 @@ def get_train_route(start_timestamp, end_timestamp):
     )
     # with DB_SESSION() as session:
     session = DB_SESSION()
-    
-    routes = session.query(TrainRoute).filter(
+
+    routes_results = session.query(TrainRoute).filter(
         and_(
             TrainRoute.date_created >= start_timestamp_dt,
             TrainRoute.date_created < end_timestamp_dt
         )
     )
+
+    routes = []
+    for rt in routes_results:
+        routes.append(rt.to_dict())
+
     session.commit()
     session.close()
 
     logger.info(
         f"Request for Train Routes between {start_timestamp_dt} and {end_timestamp_dt} returned"
-        # f"{len(tickets)} results"
+        f"{len(routes)} results"
     )
 
-    return [rt.to_dict() for rt in routes], 200
+    return route, 200
 
 
 def connect_to_kafka():
