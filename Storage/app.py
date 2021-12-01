@@ -244,7 +244,8 @@ db_string = (
     f'{app_config["datastore"]["db"]}'
 )
 
-DB_ENGINE = create_engine(db_string, pool_size=10, max_overflow=20)
+# DB_ENGINE = create_engine(db_string, pool_size=10, max_overflow=20)
+DB_ENGINE = create_engine(db_string)
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 Base.metadata.bind = DB_ENGINE
